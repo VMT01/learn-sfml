@@ -11,5 +11,3 @@
 #define ZOOM_STEP           0.03f
 #define X_JUMP_STEP         (WINDOW_WIDTH / 2.0f) * (ZOOM_STEP / ZOOM_SIZE)
 #define Y_JUMP_STEP         (WINDOW_HEIGHT / 2.0f) * (ZOOM_STEP / ZOOM_SIZE)
-
-enum Direction { UP, DOWN, LEFT, RIGHT };
