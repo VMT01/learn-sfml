@@ -19,13 +19,13 @@ chmod +x run.sh
 ```
 
 ## Usage
-Only for test folder, just run
+Only for test folder, just run. It will detect if there have folder `resources`
 ```bash
 ./run.sh
 ```
-It will detect if there have folder `resources`
 
-Or else, you can direct to folder, something like
+
+Or else, you can direct to folder, something like below. Remember, must have folder `resources` in your working directory
 ```bash
 ./run.sh star-field
 ```
