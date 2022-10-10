@@ -9,7 +9,6 @@ private:
     float y;
     float z;
     float alpha;
-    Direction direction;
 
 public:
     Point();

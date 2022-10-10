@@ -15,7 +15,7 @@ Point::Point(float _x, float _y, float _z) {
 }
 
 std::ostream& operator<< (std::ostream& os, const Point& p) {
-    os << "[" << p.x << ", " << p.y << ", " << p.z << ", " << p.alpha << ", " << p.direction << "]";
+    os << "[" << p.x << ", " << p.y << ", " << p.z << ", " << p.alpha << "]";
     return os;
 }
 
