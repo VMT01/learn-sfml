@@ -1,10 +1,10 @@
 #pragma once
 
-#include "./header.h"
-#include "./quaternion.h"
-#include "./drawable.h"
+#include "./header.hpp"
+#include "./object.hpp"
+#include "./quaternion.hpp"
 
-class Sphere: public Drawable {
+class Sphere: public Object {
 private:
     float radius;
     float renderRadius;
@@ -12,10 +12,11 @@ private:
     Quaternion drawPos;
     sf::Color color;
     sf::CircleShape shape;
+
 public:
     Sphere();
     Sphere(Quaternion, float, sf::Color);
 
-    void predraw(Quaternion, Quaternion);
-    void draw(sf::RenderWindow&);
+    void predraw(Quaternion &, Quaternion &);
+    void draw(sf::RenderWindow &);
 };

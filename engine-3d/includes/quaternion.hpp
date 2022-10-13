@@ -1,29 +1,28 @@
 #pragma once
 
-#include "./header.h"
+#include "./header.hpp"
 
 class Quaternion {
 private:
-    float x;
-    float y;
-    float z;
-    float w;
+    float w, x, y, z;
 public:
     Quaternion();
     Quaternion(float, float, float);
     Quaternion(float, float, float, float);
+ 
+    friend std::ostream& operator<< (std::ostream&, Quaternion&);
 
     Quaternion operator+ (Quaternion);
     Quaternion operator- (Quaternion);
-    Quaternion operator* (float);
     Quaternion operator* (Quaternion);
     Quaternion operator/ (float);
-    bool operator< (float);
 
-    Quaternion inverse();
     float getMagnitude();
     void setMagnitude(float);
+    Quaternion inverse();
     void normalize();
     Quaternion normalized();
     sf::Vector2f getScreenPos();
+
+    float getZ();
 };

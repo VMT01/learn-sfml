@@ -1,4 +1,4 @@
-#include "../includes/sphere.h"
+#include "../includes/sphere.hpp"
 
 Sphere::Sphere() = default;
 
@@ -6,16 +6,17 @@ Sphere::Sphere(Quaternion _pos, float _radius, sf::Color _color) {
     pos = _pos;
     radius = _radius;
     color = _color;
-    next = nullptr;
-    child = nullptr;
 }
 
-void Sphere::predraw(Quaternion cameraPos, Quaternion cameraRotation) {
-    drawPos = cameraRotation * ((pos - cameraPos) * cameraRotation.inverse());
+void Sphere::predraw(Quaternion &cameraPos, Quaternion &cameraRotation) {
+    drawPos = cameraRotation * (pos - cameraPos) * cameraRotation.inverse();
     distanceFromCamera = drawPos.getMagnitude();
     renderRadius = radius / distanceFromCamera;
+
     shape.setFillColor(color);
-    shape.setRadius(drawPos < 0 ? 0 : renderRadius);
+    if (drawPos.getZ() < 0) shape.setRadius(0);
+    else shape.setRadius(renderRadius);
+
     shape.setPosition(drawPos.getScreenPos() + sf::Vector2f(-renderRadius, -renderRadius));
 }
 
