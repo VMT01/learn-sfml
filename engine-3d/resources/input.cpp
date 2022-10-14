@@ -1,10 +1,20 @@
 #include "../includes/input.hpp"
 
-position::position() = default;
+Position::Position() {
+    x = 0.0f;
+    y = 0.0f;
+};
 
-position::position(float _x, float _y) {
+Position::Position(float _x, float _y) {
     x = _x;
     y = _y;
+}
+
+Keyboard::Keyboard() {
+    up = false;
+    down = false;
+    left = false;
+    right = false;
 }
  
 Input::Input() {
@@ -19,6 +29,7 @@ std::ostream& operator<< (std::ostream &os, Input &input) {
     return os;
 }
 
+// mouse
 void Input::calCurrentMouse(sf::Event &event) {
     currentMouse.x = event.mouseMove.x - oldMouse.x;
     currentMouse.y = event.mouseMove.y - oldMouse.y;
@@ -32,16 +43,36 @@ void Input::resetPosition() {
     oldMouse = { WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f };
 }
 
-position Input::getCurrentMouse() {
+Position Input::getCurrentMouse() {
     return currentMouse;
 }
 
-Quaternion Input::calCurrentCameraVel(Quaternion &cameraRotation) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {  // forward
-        return cameraRotation.inverse() * (Quaternion(0, 0, 0, 0.1)) * cameraRotation;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {  // backward
-        return cameraRotation.inverse() * (Quaternion(0, 0, 0, -0.1)) * cameraRotation;
-    }
-    return Quaternion(0, 0, 0, 0);
+// keyboard
+void Input::handleKeyPressed(sf::Event &event) {
+    if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) keyboard.up = true;
+    if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) keyboard.down = true;
+    if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) keyboard.left = true;
+    if (event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) keyboard.right = true;
+}
+
+void Input::handleKeyReleased(sf::Event &event) {
+    if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) keyboard.up = false;
+    if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) keyboard.down = false;
+    if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) keyboard.left = false;
+    if (event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) keyboard.right = false;
+}
+
+bool Input::isMoving() {
+    return keyboard.up || keyboard.down || keyboard.left || keyboard.right;
+}
+
+// helper
+Quaternion Input::calCurrentCameraVel(Quaternion &tempCameraPos, Quaternion &cameraRotation) {
+    tempCameraPos = Quaternion(0, 0, 0, 0);
+    if (keyboard.up) tempCameraPos = tempCameraPos + cameraRotation.inverse() * (Quaternion(0, 0, 0, MOVE_SPEED)) * cameraRotation;
+    if (keyboard.down) tempCameraPos = tempCameraPos + cameraRotation.inverse() * (Quaternion(0, 0, 0, -MOVE_SPEED)) * cameraRotation;
+    if (keyboard.left) tempCameraPos = tempCameraPos + cameraRotation.inverse() * (Quaternion(0, -MOVE_SPEED, 0, 0)) * cameraRotation;
+    if (keyboard.right) tempCameraPos = tempCameraPos + cameraRotation.inverse() * (Quaternion(0, MOVE_SPEED, 0, 0)) * cameraRotation;
+    
+    return tempCameraPos;
 }

@@ -9,9 +9,10 @@
 // camera
 #define FIELD_OF_VIEW       90.0f
 #define ROTATE_ANGLE        0.001
+#define MOVE_SPEED          0.02
 
 // screen
 #define INFINITE            1000
 
 // sphere
-#define MAX_SPHERE          100
+#define MAX_SPHERE          200

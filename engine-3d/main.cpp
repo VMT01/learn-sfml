@@ -17,16 +17,14 @@ int main() {
     Painter painter;
 
     Quaternion cameraPos(0, 0, 0, 0);
+    Quaternion tempCameraPos(0, 0, 0, 0);
     Quaternion cameraRotation(1, 0, 0, 0);
     
     while (window.isOpen()) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
-
-            if (event.type == sf::Event::KeyPressed) {
-                cameraPos = cameraPos + input.calCurrentCameraVel(cameraRotation);
-            }
-
+            if (event.type == sf::Event::KeyPressed) input.handleKeyPressed(event);
+            if (event.type == sf::Event::KeyReleased) input.handleKeyReleased(event);
             if (event.type == sf::Event::MouseMoved) {
                 input.calCurrentMouse(event);
                 if (input.inBound()) {
@@ -39,6 +37,7 @@ int main() {
         
         window.clear(sf::Color::Black);
         
+        if (input.isMoving()) cameraPos = cameraPos + input.calCurrentCameraVel(tempCameraPos, cameraRotation);
         painter.predraw(cameraPos, cameraRotation);
         painter.draw(window);
 

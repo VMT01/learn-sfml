@@ -3,18 +3,28 @@
 #include "./header.hpp"
 #include "./quaternion.hpp"
 
-typedef struct position {
+typedef struct Position {
     float x;
     float y;
 
-    position();
-    position(float, float);
-} position;
+    Position();
+    Position(float, float);
+} Position;
+
+typedef struct Keyboard {
+    bool up;
+    bool down;
+    bool left;
+    bool right;
+
+    Keyboard();
+} Keyboard;
 
 class Input {
 private:
-    position oldMouse;
-    position currentMouse;
+    Position oldMouse;
+    Position currentMouse;
+    Keyboard keyboard; 
 protected:
 public:
     Input();
@@ -24,7 +34,11 @@ public:
     void calCurrentMouse(sf::Event&);
     bool inBound();
     void resetPosition();
-    position getCurrentMouse();
+    Position getCurrentMouse();
 
-    Quaternion calCurrentCameraVel(Quaternion &);
+    void handleKeyPressed(sf::Event &);
+    void handleKeyReleased(sf::Event &);
+    bool isMoving();
+
+    Quaternion calCurrentCameraVel(Quaternion &, Quaternion &);
 };

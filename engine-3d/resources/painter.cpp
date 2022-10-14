@@ -3,7 +3,7 @@
 
 Painter::Painter() {
     for (int i = 0; i < MAX_SPHERE; i++) {
-        objects.push_back(new Sphere(Quaternion(std::rand() % 100, std::rand() % 100, std::rand() % 100), 500, sf::Color(std::rand() % 255, std::rand() % 255, std::rand() % 255)));
+        objects.push_back(new Sphere(Quaternion(std::rand() % 100, std::rand() % 100, std::rand() % 100), std::rand() % 1000, sf::Color(std::rand() % 255, std::rand() % 255, std::rand() % 255)));
     }
 }
 
