@@ -14,13 +14,20 @@ Painter::~Painter() {
 }
 
 void Painter::predraw(Quaternion &cameraPos, Quaternion &cameraRotation) {
+    drawableObjects.clear();
     for (Object *o: objects) {
-        o->predraw(cameraPos, cameraRotation);
+        if (o->predraw(cameraPos, cameraRotation)) {
+            drawableObjects.push_back(o);
+        }
     }
+    
+    std::sort(drawableObjects.begin(), drawableObjects.end(), [](Object *a, Object *b) {
+        return a->getDistanceFromCamera() >= b->getDistanceFromCamera();
+    });
 }
 
 void Painter::draw(sf::RenderWindow &window) {
-    for (Object *o: objects) {
+    for (Object *o: drawableObjects) {
         o->draw(window);
     }
 }

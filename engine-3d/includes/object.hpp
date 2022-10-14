@@ -9,6 +9,7 @@ protected:
 public:
     Object();
 
-    virtual void predraw(Quaternion &, Quaternion &) {}
+    virtual bool predraw(Quaternion &, Quaternion &) = 0;
     virtual void draw(sf::RenderWindow &) {}
+    virtual float getDistanceFromCamera() = 0;
 };
