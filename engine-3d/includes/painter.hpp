@@ -7,6 +7,7 @@
 class Painter {
 private:
     std::vector<Object *> objects;
+    std::vector<Object *> drawableObjects;
 public:
     Painter();
     ~Painter();

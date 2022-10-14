@@ -17,6 +17,8 @@ public:
     Sphere();
     Sphere(Quaternion, float, sf::Color);
 
-    void predraw(Quaternion &, Quaternion &);
+    bool isVisable();
+    bool predraw(Quaternion &, Quaternion &);
     void draw(sf::RenderWindow &);
+    float getDistanceFromCamera();
 };
